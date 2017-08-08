@@ -21,7 +21,10 @@
 // for developing locally use the db_url of:
 // mysql://root:root@localhost/gingerbread_tips
 
-$db = parse_url($_ENV["DATABASE_URL"]);
+$db_env = $_ENV["DATABASE_URL"];
+$db_url = $db_env ? $db_env : "mysql://root:root@localhost/gingerbread_tips";
+
+$db = parse_url($db_url);
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define('DB_NAME', trim($db["path"], "/"));
