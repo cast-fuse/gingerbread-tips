@@ -17,7 +17,11 @@
  *
  * @package WordPress
  */
-$db = parse_url($_ENV["CLEARDB_DATABASE_URL"]);
+
+// for developing locally use the db_url of:
+// mysql://root:root@localhost/gingerbread_tips
+
+$db = parse_url($_ENV["DATABASE_URL"]);
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define('DB_NAME', trim($db["path"], "/"));
