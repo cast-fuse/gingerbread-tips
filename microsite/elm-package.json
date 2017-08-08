@@ -1,10 +1,10 @@
 {
     "version": "1.0.0",
-    "summary": "helpful summary of your project, less than 80 characters",
-    "repository": "https://github.com/user/project.git",
+    "summary": "An SPA to display tips and quotes from singe parents",
+    "repository": "https://github.com/cast-fuse/gingerbread-tips.git",
     "license": "BSD3",
     "source-directories": [
-        "./elm"
+        "./app"
     ],
     "exposed-modules": [],
     "dependencies": {

@@ -1,0 +1,16 @@
+{
+  "name": "gingerbread-tips",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "elm-live app/Main.elm --output=public/main.js --dir=public --open --debug --pushstate",
+    "build": "elm-make app/Main.elm --output=public/main.js",
+    "deploy": "git subtree push --prefix public origin gh-pages"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "elm-live": "^2.7.5"
+  }
+}
