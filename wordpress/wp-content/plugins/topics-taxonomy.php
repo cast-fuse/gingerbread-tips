@@ -1,5 +1,5 @@
 <?php
-/*Plugin Name: Create Custom Taxonomy for Tips
+/*Plugin Name: Create 'Topics' Custom Taxonomy for Tips
 Description: This plugin registers the 'topics' custom taxonomy.
 Version: 1.0
 License: GPLv2
@@ -32,7 +32,7 @@ function tip_topic_taxonomy() {
 	);
 	$args = array(
 		'labels'                     => $labels,
-		'hierarchical'               => false,
+		'hierarchical'               => true,
 		'public'                     => true,
 		'show_ui'                    => true,
 		'show_admin_column'          => true,
@@ -43,6 +43,24 @@ function tip_topic_taxonomy() {
 	register_taxonomy( 'topic', array( 'tips' ), $args );
 
 }
+
 add_action( 'init', 'tip_topic_taxonomy', 0 );
+
+function get_topic_data( $object ) {
+  $topics = get_the_terms( $object['id'], 'topic' );
+  return $topics ? $topics : array();
+}
+
+function register_topic_rest_field() {
+  register_rest_field(
+    'tips',
+    'topic_data',
+    array(
+      'get_callback' => 'get_topic_data'
+    )
+  );
+}
+
+add_action( 'rest_api_init', 'register_topic_rest_field' );
 
 ?>
