@@ -42,6 +42,7 @@ function tips_post_type() {
 		'description'           => __( 'Tips from parents.', 'text_domain' ),
 		'labels'                => $labels,
 		'supports'              => array( 'title', 'editor', 'author', 'revisions', 'custom-fields', ),
+		'taxonomies'            => array( 'topic' ),
 		'hierarchical'          => false,
 		'public'                => true,
 		'show_ui'               => true,
