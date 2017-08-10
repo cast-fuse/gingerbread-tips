@@ -8059,9 +8059,9 @@ var _krisajenkins$remotedata$RemoteData$update = F2(
 var _cast_fuse$gingerbread_tips$Model$Model = function (a) {
 	return {tips: a};
 };
-var _cast_fuse$gingerbread_tips$Model$Tip = F5(
-	function (a, b, c, d, e) {
-		return {title: a, body: b, attribution: c, tags: d, attribution: e};
+var _cast_fuse$gingerbread_tips$Model$Tip = F4(
+	function (a, b, c, d) {
+		return {title: a, body: b, attribution: c, tags: d};
 	});
 var _cast_fuse$gingerbread_tips$Model$Tag = F2(
 	function (a, b) {
@@ -8071,6 +8071,29 @@ var _cast_fuse$gingerbread_tips$Model$TipsResponse = function (a) {
 	return {ctor: 'TipsResponse', _0: a};
 };
 
+var _cast_fuse$gingerbread_tips$Data_Tip$makeTagDict = function (tags) {
+	return A3(
+		_elm_lang$core$List$foldl,
+		F2(
+			function (tag, dict) {
+				return A3(_elm_lang$core$Dict$insert, tag.title, tag, dict);
+			}),
+		_elm_lang$core$Dict$empty,
+		tags);
+};
+var _cast_fuse$gingerbread_tips$Data_Tip$allTags = function (tips) {
+	return A3(
+		_elm_lang$core$List$foldl,
+		F2(
+			function (tip, dict) {
+				return A2(
+					_elm_lang$core$Dict$union,
+					_cast_fuse$gingerbread_tips$Data_Tip$makeTagDict(tip.tags),
+					dict);
+			}),
+		_elm_lang$core$Dict$empty,
+		tips);
+};
 var _cast_fuse$gingerbread_tips$Data_Tip$handleTipsResponse = F2(
 	function (tipsData, model) {
 		return _elm_lang$core$Native_Utils.update(
@@ -24476,20 +24499,29 @@ var _cast_fuse$gingerbread_tips$Request_Tip$tagDecoder = A2(
 		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_cast_fuse$gingerbread_tips$Model$Tag)));
 var _cast_fuse$gingerbread_tips$Request_Tip$tipDecoder = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-	'attribution',
-	_elm_lang$core$Json_Decode$string,
+	'tag_data',
+	_elm_lang$core$Json_Decode$list(_cast_fuse$gingerbread_tips$Request_Tip$tagDecoder),
 	A3(
 		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-		'tag_data',
-		_elm_lang$core$Json_Decode$list(_cast_fuse$gingerbread_tips$Request_Tip$tagDecoder),
-		A2(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
-			'mum',
+		'attribution',
+		_elm_lang$core$Json_Decode$string,
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$requiredAt,
+			{
+				ctor: '::',
+				_0: 'content',
+				_1: {
+					ctor: '::',
+					_0: 'rendered',
+					_1: {ctor: '[]'}
+				}
+			},
+			_cast_fuse$gingerbread_tips$Request_Tip$nonHtmlString,
 			A3(
 				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$requiredAt,
 				{
 					ctor: '::',
-					_0: 'content',
+					_0: 'title',
 					_1: {
 						ctor: '::',
 						_0: 'rendered',
@@ -24497,19 +24529,7 @@ var _cast_fuse$gingerbread_tips$Request_Tip$tipDecoder = A3(
 					}
 				},
 				_cast_fuse$gingerbread_tips$Request_Tip$nonHtmlString,
-				A3(
-					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$requiredAt,
-					{
-						ctor: '::',
-						_0: 'title',
-						_1: {
-							ctor: '::',
-							_0: 'rendered',
-							_1: {ctor: '[]'}
-						}
-					},
-					_cast_fuse$gingerbread_tips$Request_Tip$nonHtmlString,
-					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_cast_fuse$gingerbread_tips$Model$Tip))))));
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_cast_fuse$gingerbread_tips$Model$Tip)))));
 var _cast_fuse$gingerbread_tips$Request_Tip$tipsDecoder = _elm_lang$core$Json_Decode$list(_cast_fuse$gingerbread_tips$Request_Tip$tipDecoder);
 var _cast_fuse$gingerbread_tips$Request_Tip$getTips = A2(
 	_elm_lang$core$Platform_Cmd$map,
@@ -24645,7 +24665,7 @@ var _cast_fuse$gingerbread_tips$Main$main = _elm_lang$html$Html$program(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _cast_fuse$gingerbread_tips$Main$main !== 'undefined') {
-    _cast_fuse$gingerbread_tips$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Model.Msg":{"args":[],"tags":{"TipsResponse":["Model.RemoteTipsData"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"RemoteData.RemoteData":{"args":["e","a"],"tags":{"NotAsked":[],"Success":["a"],"Loading":[],"Failure":["e"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}}},"aliases":{"RemoteData.WebData":{"args":["a"],"type":"RemoteData.RemoteData Http.Error a"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.RemoteTipsData":{"args":[],"type":"RemoteData.WebData (List Model.Tip)"},"Model.Tag":{"args":[],"type":"{ title : String, link : String }"},"Model.Tip":{"args":[],"type":"{ title : String , body : String , attribution : String , tags : List Model.Tag , attribution : String }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _cast_fuse$gingerbread_tips$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Model.Msg":{"args":[],"tags":{"TipsResponse":["Model.RemoteTipsData"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"RemoteData.RemoteData":{"args":["e","a"],"tags":{"NotAsked":[],"Success":["a"],"Loading":[],"Failure":["e"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}}},"aliases":{"RemoteData.WebData":{"args":["a"],"type":"RemoteData.RemoteData Http.Error a"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.RemoteTipsData":{"args":[],"type":"RemoteData.WebData (List Model.Tip)"},"Model.Tag":{"args":[],"type":"{ title : String, link : String }"},"Model.Tip":{"args":[],"type":"{ title : String , body : String , attribution : String , tags : List Model.Tag }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])
