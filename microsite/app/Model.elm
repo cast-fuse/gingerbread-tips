@@ -1,6 +1,7 @@
 module Model exposing (..)
 
 import RemoteData exposing (WebData)
+import Dict exposing (Dict)
 
 
 type alias Model =
@@ -13,7 +14,6 @@ type alias Tip =
     , body : String
     , attribution : String
     , tags : List Tag
-    , attribution : String
     }
 
 
@@ -21,6 +21,10 @@ type alias Tag =
     { title : String
     , link : String
     }
+
+
+type alias AllTags =
+    Dict String Tag
 
 
 type alias RemoteTipsData =
