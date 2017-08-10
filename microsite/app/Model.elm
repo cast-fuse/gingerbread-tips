@@ -13,6 +13,7 @@ type alias Tip =
     , body : String
     , attribution : String
     , tags : List Tag
+    , attribution : String
     }
 
 

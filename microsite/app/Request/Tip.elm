@@ -27,7 +27,15 @@ tipDecoder =
         |> requiredAt [ "title", "rendered" ] nonHtmlString
         |> requiredAt [ "content", "rendered" ] nonHtmlString
         |> hardcoded "mum"
-        |> hardcoded []
+        |> required "tag_data" (list tagDecoder)
+        |> required "attribution" string
+
+
+tagDecoder : Decoder Tag
+tagDecoder =
+    decode Tag
+        |> required "name" string
+        |> hardcoded "www.link.com"
 
 
 nonHtmlString : Decoder String
