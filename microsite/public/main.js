@@ -14660,6 +14660,7 @@ var _cast_fuse$gingerbread_tips$Model$Tag = F2(
 var _cast_fuse$gingerbread_tips$Model$GoToTag = function (a) {
 	return {ctor: 'GoToTag', _0: a};
 };
+var _cast_fuse$gingerbread_tips$Model$Home = {ctor: 'Home'};
 var _cast_fuse$gingerbread_tips$Model$UrlChange = function (a) {
 	return {ctor: 'UrlChange', _0: a};
 };
@@ -14667,21 +14668,278 @@ var _cast_fuse$gingerbread_tips$Model$TipsResponse = function (a) {
 	return {ctor: 'TipsResponse', _0: a};
 };
 
+var _evancz$url_parser$UrlParser$toKeyValuePair = function (segment) {
+	var _p0 = A2(_elm_lang$core$String$split, '=', segment);
+	if (((_p0.ctor === '::') && (_p0._1.ctor === '::')) && (_p0._1._1.ctor === '[]')) {
+		return A3(
+			_elm_lang$core$Maybe$map2,
+			F2(
+				function (v0, v1) {
+					return {ctor: '_Tuple2', _0: v0, _1: v1};
+				}),
+			_elm_lang$http$Http$decodeUri(_p0._0),
+			_elm_lang$http$Http$decodeUri(_p0._1._0));
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
+var _evancz$url_parser$UrlParser$parseParams = function (queryString) {
+	return _elm_lang$core$Dict$fromList(
+		A2(
+			_elm_lang$core$List$filterMap,
+			_evancz$url_parser$UrlParser$toKeyValuePair,
+			A2(
+				_elm_lang$core$String$split,
+				'&',
+				A2(_elm_lang$core$String$dropLeft, 1, queryString))));
+};
+var _evancz$url_parser$UrlParser$splitUrl = function (url) {
+	var _p1 = A2(_elm_lang$core$String$split, '/', url);
+	if ((_p1.ctor === '::') && (_p1._0 === '')) {
+		return _p1._1;
+	} else {
+		return _p1;
+	}
+};
+var _evancz$url_parser$UrlParser$parseHelp = function (states) {
+	parseHelp:
+	while (true) {
+		var _p2 = states;
+		if (_p2.ctor === '[]') {
+			return _elm_lang$core$Maybe$Nothing;
+		} else {
+			var _p4 = _p2._0;
+			var _p3 = _p4.unvisited;
+			if (_p3.ctor === '[]') {
+				return _elm_lang$core$Maybe$Just(_p4.value);
+			} else {
+				if ((_p3._0 === '') && (_p3._1.ctor === '[]')) {
+					return _elm_lang$core$Maybe$Just(_p4.value);
+				} else {
+					var _v4 = _p2._1;
+					states = _v4;
+					continue parseHelp;
+				}
+			}
+		}
+	}
+};
+var _evancz$url_parser$UrlParser$parse = F3(
+	function (_p5, url, params) {
+		var _p6 = _p5;
+		return _evancz$url_parser$UrlParser$parseHelp(
+			_p6._0(
+				{
+					visited: {ctor: '[]'},
+					unvisited: _evancz$url_parser$UrlParser$splitUrl(url),
+					params: params,
+					value: _elm_lang$core$Basics$identity
+				}));
+	});
+var _evancz$url_parser$UrlParser$parseHash = F2(
+	function (parser, location) {
+		return A3(
+			_evancz$url_parser$UrlParser$parse,
+			parser,
+			A2(_elm_lang$core$String$dropLeft, 1, location.hash),
+			_evancz$url_parser$UrlParser$parseParams(location.search));
+	});
+var _evancz$url_parser$UrlParser$parsePath = F2(
+	function (parser, location) {
+		return A3(
+			_evancz$url_parser$UrlParser$parse,
+			parser,
+			location.pathname,
+			_evancz$url_parser$UrlParser$parseParams(location.search));
+	});
+var _evancz$url_parser$UrlParser$intParamHelp = function (maybeValue) {
+	var _p7 = maybeValue;
+	if (_p7.ctor === 'Nothing') {
+		return _elm_lang$core$Maybe$Nothing;
+	} else {
+		return _elm_lang$core$Result$toMaybe(
+			_elm_lang$core$String$toInt(_p7._0));
+	}
+};
+var _evancz$url_parser$UrlParser$mapHelp = F2(
+	function (func, _p8) {
+		var _p9 = _p8;
+		return {
+			visited: _p9.visited,
+			unvisited: _p9.unvisited,
+			params: _p9.params,
+			value: func(_p9.value)
+		};
+	});
+var _evancz$url_parser$UrlParser$State = F4(
+	function (a, b, c, d) {
+		return {visited: a, unvisited: b, params: c, value: d};
+	});
+var _evancz$url_parser$UrlParser$Parser = function (a) {
+	return {ctor: 'Parser', _0: a};
+};
+var _evancz$url_parser$UrlParser$s = function (str) {
+	return _evancz$url_parser$UrlParser$Parser(
+		function (_p10) {
+			var _p11 = _p10;
+			var _p12 = _p11.unvisited;
+			if (_p12.ctor === '[]') {
+				return {ctor: '[]'};
+			} else {
+				var _p13 = _p12._0;
+				return _elm_lang$core$Native_Utils.eq(_p13, str) ? {
+					ctor: '::',
+					_0: A4(
+						_evancz$url_parser$UrlParser$State,
+						{ctor: '::', _0: _p13, _1: _p11.visited},
+						_p12._1,
+						_p11.params,
+						_p11.value),
+					_1: {ctor: '[]'}
+				} : {ctor: '[]'};
+			}
+		});
+};
+var _evancz$url_parser$UrlParser$custom = F2(
+	function (tipe, stringToSomething) {
+		return _evancz$url_parser$UrlParser$Parser(
+			function (_p14) {
+				var _p15 = _p14;
+				var _p16 = _p15.unvisited;
+				if (_p16.ctor === '[]') {
+					return {ctor: '[]'};
+				} else {
+					var _p18 = _p16._0;
+					var _p17 = stringToSomething(_p18);
+					if (_p17.ctor === 'Ok') {
+						return {
+							ctor: '::',
+							_0: A4(
+								_evancz$url_parser$UrlParser$State,
+								{ctor: '::', _0: _p18, _1: _p15.visited},
+								_p16._1,
+								_p15.params,
+								_p15.value(_p17._0)),
+							_1: {ctor: '[]'}
+						};
+					} else {
+						return {ctor: '[]'};
+					}
+				}
+			});
+	});
+var _evancz$url_parser$UrlParser$string = A2(_evancz$url_parser$UrlParser$custom, 'STRING', _elm_lang$core$Result$Ok);
+var _evancz$url_parser$UrlParser$int = A2(_evancz$url_parser$UrlParser$custom, 'NUMBER', _elm_lang$core$String$toInt);
+var _evancz$url_parser$UrlParser_ops = _evancz$url_parser$UrlParser_ops || {};
+_evancz$url_parser$UrlParser_ops['</>'] = F2(
+	function (_p20, _p19) {
+		var _p21 = _p20;
+		var _p22 = _p19;
+		return _evancz$url_parser$UrlParser$Parser(
+			function (state) {
+				return A2(
+					_elm_lang$core$List$concatMap,
+					_p22._0,
+					_p21._0(state));
+			});
+	});
+var _evancz$url_parser$UrlParser$map = F2(
+	function (subValue, _p23) {
+		var _p24 = _p23;
+		return _evancz$url_parser$UrlParser$Parser(
+			function (_p25) {
+				var _p26 = _p25;
+				return A2(
+					_elm_lang$core$List$map,
+					_evancz$url_parser$UrlParser$mapHelp(_p26.value),
+					_p24._0(
+						{visited: _p26.visited, unvisited: _p26.unvisited, params: _p26.params, value: subValue}));
+			});
+	});
+var _evancz$url_parser$UrlParser$oneOf = function (parsers) {
+	return _evancz$url_parser$UrlParser$Parser(
+		function (state) {
+			return A2(
+				_elm_lang$core$List$concatMap,
+				function (_p27) {
+					var _p28 = _p27;
+					return _p28._0(state);
+				},
+				parsers);
+		});
+};
+var _evancz$url_parser$UrlParser$top = _evancz$url_parser$UrlParser$Parser(
+	function (state) {
+		return {
+			ctor: '::',
+			_0: state,
+			_1: {ctor: '[]'}
+		};
+	});
+var _evancz$url_parser$UrlParser_ops = _evancz$url_parser$UrlParser_ops || {};
+_evancz$url_parser$UrlParser_ops['<?>'] = F2(
+	function (_p30, _p29) {
+		var _p31 = _p30;
+		var _p32 = _p29;
+		return _evancz$url_parser$UrlParser$Parser(
+			function (state) {
+				return A2(
+					_elm_lang$core$List$concatMap,
+					_p32._0,
+					_p31._0(state));
+			});
+	});
+var _evancz$url_parser$UrlParser$QueryParser = function (a) {
+	return {ctor: 'QueryParser', _0: a};
+};
+var _evancz$url_parser$UrlParser$customParam = F2(
+	function (key, func) {
+		return _evancz$url_parser$UrlParser$QueryParser(
+			function (_p33) {
+				var _p34 = _p33;
+				var _p35 = _p34.params;
+				return {
+					ctor: '::',
+					_0: A4(
+						_evancz$url_parser$UrlParser$State,
+						_p34.visited,
+						_p34.unvisited,
+						_p35,
+						_p34.value(
+							func(
+								A2(_elm_lang$core$Dict$get, key, _p35)))),
+					_1: {ctor: '[]'}
+				};
+			});
+	});
+var _evancz$url_parser$UrlParser$stringParam = function (name) {
+	return A2(_evancz$url_parser$UrlParser$customParam, name, _elm_lang$core$Basics$identity);
+};
+var _evancz$url_parser$UrlParser$intParam = function (name) {
+	return A2(_evancz$url_parser$UrlParser$customParam, name, _evancz$url_parser$UrlParser$intParamHelp);
+};
+
+var _cast_fuse$gingerbread_tips$Data_Tip$getTagFromLocation = _evancz$url_parser$UrlParser$parsePath(_evancz$url_parser$UrlParser$string);
+var _cast_fuse$gingerbread_tips$Data_Tip$getCurrentTagName = function (history) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		'',
+		A2(
+			_elm_lang$core$Maybe$andThen,
+			_cast_fuse$gingerbread_tips$Data_Tip$getTagFromLocation,
+			_elm_lang$core$List$head(history)));
+};
 var _cast_fuse$gingerbread_tips$Data_Tip$makeTagDict = function (tags) {
 	return A3(
 		_elm_lang$core$List$foldl,
 		F2(
 			function (tag, dict) {
-				return A3(
-					_elm_lang$core$Dict$insert,
-					_elm_lang$core$String$toLower(tag.title),
-					tag,
-					dict);
+				return A3(_elm_lang$core$Dict$insert, tag.title, tag, dict);
 			}),
 		_elm_lang$core$Dict$empty,
 		tags);
 };
-var _cast_fuse$gingerbread_tips$Data_Tip$allTags = function (tips) {
+var _cast_fuse$gingerbread_tips$Data_Tip$allTagsDictionary = function (tips) {
 	return A3(
 		_elm_lang$core$List$foldl,
 		F2(
@@ -14694,6 +14952,51 @@ var _cast_fuse$gingerbread_tips$Data_Tip$allTags = function (tips) {
 		_elm_lang$core$Dict$empty,
 		tips);
 };
+var _cast_fuse$gingerbread_tips$Data_Tip$allTags = function (tips) {
+	return A2(
+		_elm_lang$core$List$map,
+		_elm_lang$core$Tuple$second,
+		_elm_lang$core$Dict$toList(
+			_cast_fuse$gingerbread_tips$Data_Tip$allTagsDictionary(tips)));
+};
+var _cast_fuse$gingerbread_tips$Data_Tip$containsTagTitle = F2(
+	function (tagTitle, tip) {
+		return A2(
+			_elm_lang$core$List$member,
+			tagTitle,
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.title;
+				},
+				tip.tags));
+	});
+var _cast_fuse$gingerbread_tips$Data_Tip$isValidTagTitle = F2(
+	function (tagTitle, tips) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, y) {
+					return x || y;
+				}),
+			false,
+			A2(
+				_elm_lang$core$List$map,
+				_cast_fuse$gingerbread_tips$Data_Tip$containsTagTitle(tagTitle),
+				tips));
+	});
+var _cast_fuse$gingerbread_tips$Data_Tip$filterTipsByTagTitle = F2(
+	function (tagTitle, tips) {
+		return A2(_cast_fuse$gingerbread_tips$Data_Tip$isValidTagTitle, tagTitle, tips) ? A2(
+			_elm_lang$core$List$filter,
+			_cast_fuse$gingerbread_tips$Data_Tip$containsTagTitle(tagTitle),
+			tips) : tips;
+	});
+var _cast_fuse$gingerbread_tips$Data_Tip$visibleTips = F2(
+	function (history, allTips) {
+		var currentTagName = _cast_fuse$gingerbread_tips$Data_Tip$getCurrentTagName(history);
+		return A2(_cast_fuse$gingerbread_tips$Data_Tip$filterTipsByTagTitle, currentTagName, allTips);
+	});
 var _cast_fuse$gingerbread_tips$Data_Tip$handleTipsResponse = F2(
 	function (tipsData, model) {
 		return _elm_lang$core$Native_Utils.update(
@@ -25138,7 +25441,7 @@ var _cast_fuse$gingerbread_tips$Request_Tip$getTips = A2(
 	_elm_lang$core$Platform_Cmd$map,
 	_cast_fuse$gingerbread_tips$Model$TipsResponse,
 	_krisajenkins$remotedata$RemoteData$sendRequest(
-		A2(_elm_lang$http$Http$get, 'http://localhost:8888/wp-json/wp/v2/tips', _cast_fuse$gingerbread_tips$Request_Tip$tipsDecoder)));
+		A2(_elm_lang$http$Http$get, 'http://gingerbread-tips.herokuapp.com/wp-json/wp/v2/tips', _cast_fuse$gingerbread_tips$Request_Tip$tipsDecoder)));
 
 var _cast_fuse$gingerbread_tips$Update$update = F2(
 	function (msg, model) {
@@ -25158,6 +25461,15 @@ var _cast_fuse$gingerbread_tips$Update$update = F2(
 							history: {ctor: '::', _0: _p0._0, _1: model.history}
 						}),
 					{ctor: '[]'});
+			case 'Home':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{
+						ctor: '::',
+						_0: _elm_lang$navigation$Navigation$newUrl('/'),
+						_1: {ctor: '[]'}
+					});
 			default:
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
@@ -25337,17 +25649,16 @@ var _cast_fuse$gingerbread_tips$View$renderTip = function (tip) {
 			}
 		});
 };
-var _cast_fuse$gingerbread_tips$View$renderTag = function (_p0) {
-	var _p1 = _p0;
+var _cast_fuse$gingerbread_tips$View$renderTag = function (tag) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('dib ph3'),
+			_0: _elm_lang$html$Html_Attributes$class('dib ph3 pointer'),
 			_1: {
 				ctor: '::',
 				_0: _elm_lang$html$Html_Events$onClick(
-					_cast_fuse$gingerbread_tips$Model$GoToTag(_p1._1)),
+					_cast_fuse$gingerbread_tips$Model$GoToTag(tag)),
 				_1: {ctor: '[]'}
 			}
 		},
@@ -25358,7 +25669,7 @@ var _cast_fuse$gingerbread_tips$View$renderTag = function (_p0) {
 				{ctor: '[]'},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(_p1._0),
+					_0: _elm_lang$html$Html$text(tag.title),
 					_1: {ctor: '[]'}
 				}),
 			_1: {ctor: '[]'}
@@ -25368,12 +25679,11 @@ var _cast_fuse$gingerbread_tips$View$renderTags = function (tips) {
 	return A2(
 		_elm_lang$core$List$map,
 		_cast_fuse$gingerbread_tips$View$renderTag,
-		_elm_lang$core$Dict$toList(
-			_cast_fuse$gingerbread_tips$Data_Tip$allTags(tips)));
+		_cast_fuse$gingerbread_tips$Data_Tip$allTags(tips));
 };
-var _cast_fuse$gingerbread_tips$View$renderTips = function (remoteTipsData) {
-	var _p2 = remoteTipsData;
-	switch (_p2.ctor) {
+var _cast_fuse$gingerbread_tips$View$renderTips = function (model) {
+	var _p0 = model.tips;
+	switch (_p0.ctor) {
 		case 'NotAsked':
 			return A2(
 				_elm_lang$html$Html$span,
@@ -25398,7 +25708,7 @@ var _cast_fuse$gingerbread_tips$View$renderTips = function (remoteTipsData) {
 					_1: {ctor: '[]'}
 				});
 		default:
-			var _p3 = _p2._0;
+			var _p1 = _p0._0;
 			return A2(
 				_elm_lang$html$Html$div,
 				{
@@ -25411,13 +25721,16 @@ var _cast_fuse$gingerbread_tips$View$renderTips = function (remoteTipsData) {
 					_0: A2(
 						_elm_lang$html$Html$div,
 						{ctor: '[]'},
-						_cast_fuse$gingerbread_tips$View$renderTags(_p3)),
+						_cast_fuse$gingerbread_tips$View$renderTags(_p1)),
 					_1: {
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$div,
 							{ctor: '[]'},
-							A2(_elm_lang$core$List$map, _cast_fuse$gingerbread_tips$View$renderTip, _p3)),
+							A2(
+								_elm_lang$core$List$map,
+								_cast_fuse$gingerbread_tips$View$renderTip,
+								A2(_cast_fuse$gingerbread_tips$Data_Tip$visibleTips, model.history, _p1))),
 						_1: {ctor: '[]'}
 					}
 				});
@@ -25437,8 +25750,12 @@ var _cast_fuse$gingerbread_tips$View$view = function (model) {
 				_elm_lang$html$Html$h2,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('tracked-mega fw5 f2 ttu'),
-					_1: {ctor: '[]'}
+					_0: _elm_lang$html$Html_Attributes$class('tracked-mega fw5 f2 ttu pointer'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(_cast_fuse$gingerbread_tips$Model$Home),
+						_1: {ctor: '[]'}
+					}
 				},
 				{
 					ctor: '::',
@@ -25447,7 +25764,7 @@ var _cast_fuse$gingerbread_tips$View$view = function (model) {
 				}),
 			_1: {
 				ctor: '::',
-				_0: _cast_fuse$gingerbread_tips$View$renderTips(model.tips),
+				_0: _cast_fuse$gingerbread_tips$View$renderTips(model),
 				_1: {ctor: '[]'}
 			}
 		});
@@ -25466,7 +25783,7 @@ var _cast_fuse$gingerbread_tips$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _cast_fuse$gingerbread_tips$Main$main !== 'undefined') {
-    _cast_fuse$gingerbread_tips$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Model.Msg":{"args":[],"tags":{"UrlChange":["Navigation.Location"],"TipsResponse":["Model.RemoteTipsData"],"GoToTag":["Model.Tag"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"RemoteData.RemoteData":{"args":["e","a"],"tags":{"NotAsked":[],"Success":["a"],"Loading":[],"Failure":["e"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}}},"aliases":{"RemoteData.WebData":{"args":["a"],"type":"RemoteData.RemoteData Http.Error a"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.RemoteTipsData":{"args":[],"type":"RemoteData.WebData (List Model.Tip)"},"Model.Tag":{"args":[],"type":"{ title : String, link : String }"},"Model.Tip":{"args":[],"type":"{ title : String , body : String , attribution : String , tags : List Model.Tag }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _cast_fuse$gingerbread_tips$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Model.Msg":{"args":[],"tags":{"Home":[],"UrlChange":["Navigation.Location"],"TipsResponse":["Model.RemoteTipsData"],"GoToTag":["Model.Tag"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"RemoteData.RemoteData":{"args":["e","a"],"tags":{"NotAsked":[],"Success":["a"],"Loading":[],"Failure":["e"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}}},"aliases":{"RemoteData.WebData":{"args":["a"],"type":"RemoteData.RemoteData Http.Error a"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.RemoteTipsData":{"args":[],"type":"RemoteData.WebData (List Model.Tip)"},"Model.Tag":{"args":[],"type":"{ title : String, link : String }"},"Model.Tip":{"args":[],"type":"{ title : String , body : String , attribution : String , tags : List Model.Tag }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

@@ -28,5 +28,8 @@ update msg model =
         UrlChange location ->
             { model | history = location :: model.history } ! []
 
+        Home ->
+            model ! [ newUrl "/" ]
+
         GoToTag tag ->
             model ! [ newUrl tag.title ]
