@@ -1,11 +1,13 @@
 module Model exposing (..)
 
-import RemoteData exposing (WebData)
 import Dict exposing (Dict)
+import Navigation
+import RemoteData exposing (WebData)
 
 
 type alias Model =
     { tips : RemoteTipsData
+    , history : List Navigation.Location
     }
 
 
@@ -33,3 +35,4 @@ type alias RemoteTipsData =
 
 type Msg
     = TipsResponse RemoteTipsData
+    | UrlChange Navigation.Location

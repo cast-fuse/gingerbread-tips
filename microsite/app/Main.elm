@@ -1,14 +1,15 @@
 module Main exposing (..)
 
-import Update exposing (..)
-import Model exposing (..)
-import View exposing (..)
 import Html exposing (..)
+import Model exposing (..)
+import Navigation
+import Update exposing (..)
+import View exposing (..)
 
 
 main : Program Never Model Msg
 main =
-    program
+    Navigation.program UrlChange
         { update = update
         , subscriptions = always Sub.none
         , view = view
