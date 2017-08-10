@@ -1,7 +1,10 @@
 module View exposing (..)
 
+import Data.Tip exposing (allTags)
+import Dict
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Model exposing (..)
 import RemoteData exposing (..)
 
@@ -27,7 +30,23 @@ renderTips remoteTipsData =
             p [] [ text "Sorry there was a problem loading the data" ]
 
         Success tips ->
-            div [ class "center mw8 ph3" ] <| List.map renderTip tips
+            div [ class "center mw8 ph3" ]
+                [ div [] <| renderTags tips
+                , div [] <| List.map renderTip tips
+                ]
+
+
+renderTags : List Tip -> List (Html Msg)
+renderTags tips =
+    tips
+        |> allTags
+        |> Dict.toList
+        |> List.map renderTag
+
+
+renderTag : ( String, Tag ) -> Html Msg
+renderTag ( tagName, tag ) =
+    div [ class "dib ph3", onClick <| GoToTag tag ] [ p [] [ text tagName ] ]
 
 
 renderTip : Tip -> Html Msg

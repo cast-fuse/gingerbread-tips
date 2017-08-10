@@ -36,3 +36,4 @@ type alias RemoteTipsData =
 type Msg
     = TipsResponse RemoteTipsData
     | UrlChange Navigation.Location
+    | GoToTag Tag

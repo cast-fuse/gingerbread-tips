@@ -2,7 +2,7 @@ module Update exposing (..)
 
 import Data.Tip exposing (handleTipsResponse)
 import Model exposing (..)
-import Navigation
+import Navigation exposing (newUrl)
 import RemoteData exposing (..)
 import Request.Tip exposing (getTips)
 
@@ -27,3 +27,6 @@ update msg model =
 
         UrlChange location ->
             { model | history = location :: model.history } ! []
+
+        GoToTag tag ->
+            model ! [ newUrl tag.title ]

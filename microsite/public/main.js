@@ -14657,6 +14657,9 @@ var _cast_fuse$gingerbread_tips$Model$Tag = F2(
 	function (a, b) {
 		return {title: a, link: b};
 	});
+var _cast_fuse$gingerbread_tips$Model$GoToTag = function (a) {
+	return {ctor: 'GoToTag', _0: a};
+};
 var _cast_fuse$gingerbread_tips$Model$UrlChange = function (a) {
 	return {ctor: 'UrlChange', _0: a};
 };
@@ -14669,7 +14672,11 @@ var _cast_fuse$gingerbread_tips$Data_Tip$makeTagDict = function (tags) {
 		_elm_lang$core$List$foldl,
 		F2(
 			function (tag, dict) {
-				return A3(_elm_lang$core$Dict$insert, tag.title, tag, dict);
+				return A3(
+					_elm_lang$core$Dict$insert,
+					_elm_lang$core$String$toLower(tag.title),
+					tag,
+					dict);
 			}),
 		_elm_lang$core$Dict$empty,
 		tags);
@@ -25136,20 +25143,30 @@ var _cast_fuse$gingerbread_tips$Request_Tip$getTips = A2(
 var _cast_fuse$gingerbread_tips$Update$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		if (_p0.ctor === 'TipsResponse') {
-			return A2(
-				_elm_lang$core$Platform_Cmd_ops['!'],
-				A2(_cast_fuse$gingerbread_tips$Data_Tip$handleTipsResponse, _p0._0, model),
-				{ctor: '[]'});
-		} else {
-			return A2(
-				_elm_lang$core$Platform_Cmd_ops['!'],
-				_elm_lang$core$Native_Utils.update(
+		switch (_p0.ctor) {
+			case 'TipsResponse':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					A2(_cast_fuse$gingerbread_tips$Data_Tip$handleTipsResponse, _p0._0, model),
+					{ctor: '[]'});
+			case 'UrlChange':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							history: {ctor: '::', _0: _p0._0, _1: model.history}
+						}),
+					{ctor: '[]'});
+			default:
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
 					model,
 					{
-						history: {ctor: '::', _0: _p0._0, _1: model.history}
-					}),
-				{ctor: '[]'});
+						ctor: '::',
+						_0: _elm_lang$navigation$Navigation$newUrl(_p0._0.title),
+						_1: {ctor: '[]'}
+					});
 		}
 	});
 var _cast_fuse$gingerbread_tips$Update$initialState = function (location) {
@@ -25172,6 +25189,121 @@ var _cast_fuse$gingerbread_tips$Update$init = function (location) {
 			_1: {ctor: '[]'}
 		});
 };
+
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'checked',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'value',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
+	});
 
 var _cast_fuse$gingerbread_tips$View$renderTip = function (tip) {
 	return A2(
@@ -25205,9 +25337,43 @@ var _cast_fuse$gingerbread_tips$View$renderTip = function (tip) {
 			}
 		});
 };
+var _cast_fuse$gingerbread_tips$View$renderTag = function (_p0) {
+	var _p1 = _p0;
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('dib ph3'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(
+					_cast_fuse$gingerbread_tips$Model$GoToTag(_p1._1)),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$p,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(_p1._0),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _cast_fuse$gingerbread_tips$View$renderTags = function (tips) {
+	return A2(
+		_elm_lang$core$List$map,
+		_cast_fuse$gingerbread_tips$View$renderTag,
+		_elm_lang$core$Dict$toList(
+			_cast_fuse$gingerbread_tips$Data_Tip$allTags(tips)));
+};
 var _cast_fuse$gingerbread_tips$View$renderTips = function (remoteTipsData) {
-	var _p0 = remoteTipsData;
-	switch (_p0.ctor) {
+	var _p2 = remoteTipsData;
+	switch (_p2.ctor) {
 		case 'NotAsked':
 			return A2(
 				_elm_lang$html$Html$span,
@@ -25232,6 +25398,7 @@ var _cast_fuse$gingerbread_tips$View$renderTips = function (remoteTipsData) {
 					_1: {ctor: '[]'}
 				});
 		default:
+			var _p3 = _p2._0;
 			return A2(
 				_elm_lang$html$Html$div,
 				{
@@ -25239,7 +25406,21 @@ var _cast_fuse$gingerbread_tips$View$renderTips = function (remoteTipsData) {
 					_0: _elm_lang$html$Html_Attributes$class('center mw8 ph3'),
 					_1: {ctor: '[]'}
 				},
-				A2(_elm_lang$core$List$map, _cast_fuse$gingerbread_tips$View$renderTip, _p0._0));
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{ctor: '[]'},
+						_cast_fuse$gingerbread_tips$View$renderTags(_p3)),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							A2(_elm_lang$core$List$map, _cast_fuse$gingerbread_tips$View$renderTip, _p3)),
+						_1: {ctor: '[]'}
+					}
+				});
 	}
 };
 var _cast_fuse$gingerbread_tips$View$view = function (model) {
@@ -25285,7 +25466,7 @@ var _cast_fuse$gingerbread_tips$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _cast_fuse$gingerbread_tips$Main$main !== 'undefined') {
-    _cast_fuse$gingerbread_tips$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Model.Msg":{"args":[],"tags":{"UrlChange":["Navigation.Location"],"TipsResponse":["Model.RemoteTipsData"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"RemoteData.RemoteData":{"args":["e","a"],"tags":{"NotAsked":[],"Success":["a"],"Loading":[],"Failure":["e"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}}},"aliases":{"RemoteData.WebData":{"args":["a"],"type":"RemoteData.RemoteData Http.Error a"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.RemoteTipsData":{"args":[],"type":"RemoteData.WebData (List Model.Tip)"},"Model.Tag":{"args":[],"type":"{ title : String, link : String }"},"Model.Tip":{"args":[],"type":"{ title : String , body : String , attribution : String , tags : List Model.Tag }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _cast_fuse$gingerbread_tips$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Model.Msg":{"args":[],"tags":{"UrlChange":["Navigation.Location"],"TipsResponse":["Model.RemoteTipsData"],"GoToTag":["Model.Tag"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"RemoteData.RemoteData":{"args":["e","a"],"tags":{"NotAsked":[],"Success":["a"],"Loading":[],"Failure":["e"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}}},"aliases":{"RemoteData.WebData":{"args":["a"],"type":"RemoteData.RemoteData Http.Error a"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.RemoteTipsData":{"args":[],"type":"RemoteData.WebData (List Model.Tip)"},"Model.Tag":{"args":[],"type":"{ title : String, link : String }"},"Model.Tip":{"args":[],"type":"{ title : String , body : String , attribution : String , tags : List Model.Tag }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])
