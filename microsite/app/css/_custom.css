@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  font-family: var(--sans-serif);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.handwriting {
+  font-family: Caveat;
+}

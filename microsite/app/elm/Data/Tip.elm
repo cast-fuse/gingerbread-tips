@@ -21,25 +21,30 @@ visibleTips history allTips =
 
 
 filterTipsByTagTitle : String -> List Tip -> List Tip
-filterTipsByTagTitle tagTitle tips =
-    if isValidTagTitle tagTitle tips then
-        List.filter (containsTagTitle tagTitle) tips
+filterTipsByTagTitle tagUrl tips =
+    if isValidTag tagUrl tips then
+        List.filter (containsTag tagUrl) tips
     else
         tips
 
 
-isValidTagTitle : String -> List Tip -> Bool
-isValidTagTitle tagTitle tips =
+isValidTag : String -> List Tip -> Bool
+isValidTag tagTitle tips =
     tips
-        |> List.map (containsTagTitle tagTitle)
-        |> List.foldl (||) False
+        |> List.map (containsTag tagTitle)
+        |> anyTrue
 
 
-containsTagTitle : String -> Tip -> Bool
-containsTagTitle tagTitle tip =
+anyTrue : List Bool -> Bool
+anyTrue =
+    List.foldl (||) False
+
+
+containsTag : String -> Tip -> Bool
+containsTag tagUrl tip =
     tip.tags
-        |> List.map .title
-        |> List.member tagTitle
+        |> List.map .urlSlug
+        |> List.member tagUrl
 
 
 allTags : List Tip -> List Tag
@@ -57,17 +62,17 @@ allTagsDictionary tips =
 
 makeTagDict : List Tag -> Dict String Tag
 makeTagDict tags =
-    tags |> List.foldl (\tag dict -> Dict.insert tag.title tag dict) Dict.empty
+    tags |> List.foldl (\tag dict -> Dict.insert tag.urlSlug tag dict) Dict.empty
 
 
 getCurrentTagName : List Navigation.Location -> String
 getCurrentTagName history =
     history
         |> List.head
-        |> Maybe.andThen getTagFromLocation
+        |> Maybe.andThen getTagFromUrlBar
         |> Maybe.withDefault ""
 
 
-getTagFromLocation : Navigation.Location -> Maybe String
-getTagFromLocation =
+getTagFromUrlBar : Navigation.Location -> Maybe String
+getTagFromUrlBar =
     parsePath string

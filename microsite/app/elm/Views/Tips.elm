@@ -1,4 +1,4 @@
-module View exposing (..)
+module Views.Tips exposing (..)
 
 import Data.Tip exposing (allTags, visibleTips)
 import Html exposing (..)
@@ -8,16 +8,8 @@ import Model exposing (..)
 import RemoteData exposing (..)
 
 
-view : Model -> Html Msg
-view model =
-    div [ class "tc blue mt5" ]
-        [ h2 [ class "tracked-mega fw5 f2 ttu pointer", onClick Home ] [ text "Gingerbread Tips" ]
-        , renderTips model
-        ]
-
-
-renderTips : Model -> Html Msg
-renderTips model =
+tips : Model -> Html Msg
+tips model =
     case model.tips of
         NotAsked ->
             span [] []
@@ -30,8 +22,7 @@ renderTips model =
 
         Success tips ->
             div [ class "center mw8 ph3" ]
-                [ div [] <| renderTags <| tips
-                , div [] <| List.map renderTip <| visibleTips model.history tips
+                [ div [] <| List.map renderTip <| visibleTips model.history tips
                 ]
 
 
@@ -49,7 +40,7 @@ renderTag tag =
 
 renderTip : Tip -> Html Msg
 renderTip tip =
-    div [ class "bg-light-blue mv4 pa4 tl br2" ]
-        [ h2 [] [ text tip.title ]
-        , p [] [ text tip.body ]
+    div [ class "bg-white dark-gray mv4 pa4 tl br2" ]
+        [ h2 [ class "f2 handwriting" ] [ text tip.title ]
+        , p [ class "f5" ] [ text tip.body ]
         ]
