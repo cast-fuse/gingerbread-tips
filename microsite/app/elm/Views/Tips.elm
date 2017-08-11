@@ -5,6 +5,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Model exposing (..)
 import RemoteData exposing (..)
+import Views.Tags exposing (renderTags)
 
 
 tips : Model -> Html Msg
@@ -22,6 +23,7 @@ tips model =
         Success tips ->
             div [ class "center mw8 ph3" ]
                 [ div [] <| List.indexedMap renderTip <| visibleTips model.history tips
+                , renderTags tips
                 ]
 
 

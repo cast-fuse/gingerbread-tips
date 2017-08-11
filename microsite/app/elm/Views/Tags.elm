@@ -7,13 +7,15 @@ import Html.Events exposing (onClick)
 import Model exposing (..)
 
 
-renderTags : List Tip -> List (Html Msg)
+renderTags : List Tip -> Html Msg
 renderTags tips =
-    tips
-        |> allTags
-        |> List.map renderTag
+    div [ class "bg-gold ph3" ]
+        [ p [ class "dark-blue tl pv4" ] [ text "Filter these tips by..." ]
+        , div [ class "pb4 flex justify-between" ] (List.map renderTag <| allTags tips)
+        ]
 
 
 renderTag : Tag -> Html Msg
 renderTag tag =
-    div [ class "dib ph3 pointer", onClick <| GoToTag tag ] [ p [] [ text tag.title ] ]
+    div [ class "dib pv2 ph3 br5 pointer orange bg-white f2", onClick <| GoToTag tag ]
+        [ p [ class "ma0" ] [ text tag.title ] ]
