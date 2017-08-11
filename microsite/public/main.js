@@ -25525,7 +25525,7 @@ var _cast_fuse$gingerbread_tips$Views_Headline$headline = A2(
 			},
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html$text('\'How did you...?\'\''),
+				_0: _elm_lang$html$Html$text('\'\'How did you...?\'\''),
 				_1: {ctor: '[]'}
 			}),
 		_1: {
@@ -25772,38 +25772,6 @@ var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = function (tip) {
 				_1: {ctor: '[]'}
 			}
 		});
-};
-var _cast_fuse$gingerbread_tips$Views_Tips$renderTag = function (tag) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('dib ph3 pointer'),
-			_1: {
-				ctor: '::',
-				_0: _elm_lang$html$Html_Events$onClick(
-					_cast_fuse$gingerbread_tips$Model$GoToTag(tag)),
-				_1: {ctor: '[]'}
-			}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$p,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(tag.title),
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		});
-};
-var _cast_fuse$gingerbread_tips$Views_Tips$renderTags = function (tips) {
-	return A2(
-		_elm_lang$core$List$map,
-		_cast_fuse$gingerbread_tips$Views_Tips$renderTag,
-		_cast_fuse$gingerbread_tips$Data_Tip$allTags(tips));
 };
 var _cast_fuse$gingerbread_tips$Views_Tips$tips = function (model) {
 	var _p0 = model.tips;
