@@ -27,7 +27,13 @@ tips model =
 
 renderTip : Tip -> Html Msg
 renderTip tip =
-    div [ class "bg-white dark-gray mv4 pa4 tl br2" ]
-        [ h2 [ class "f2 handwriting" ] [ text tip.title ]
-        , p [ class "f5" ] [ text tip.body ]
+    div []
+        [ div [ class "bg-white dark-gray mv4 pa4 tl br2" ]
+            [ h2 [ class "f2 handwriting mt0" ] [ text tip.title ]
+            , p [ class "f5" ] [ text tip.body ]
+            ]
+        , div [ class "flex justify-between" ]
+            [ p [ class "white f2 mv0 mh3" ] [ text tip.attribution ]
+            , p [ class "f2 mv0 mh3 bg-white orange pv2 ph3 br5" ] [ text "separation" ]
+            ]
         ]

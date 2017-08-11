@@ -10,3 +10,7 @@ body {
 .handwriting {
   font-family: Caveat;
 }
+
+.br5 {
+  border-radius: 2rem;
+}
