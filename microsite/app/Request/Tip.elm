@@ -11,7 +11,7 @@ import RemoteData exposing (RemoteData)
 
 getTips : Cmd Msg
 getTips =
-    Http.get "http://localhost:8888/wp-json/wp/v2/tips" tipsDecoder
+    Http.get "http://gingerbread-tips.herokuapp.com/wp-json/wp/v2/tips" tipsDecoder
         |> RemoteData.sendRequest
         |> Cmd.map TipsResponse
 
@@ -26,8 +26,15 @@ tipDecoder =
     decode Tip
         |> requiredAt [ "title", "rendered" ] nonHtmlString
         |> requiredAt [ "content", "rendered" ] nonHtmlString
-        |> hardcoded "mum"
-        |> hardcoded []
+        |> required "attribution" string
+        |> required "tag_data" (list tagDecoder)
+
+
+tagDecoder : Decoder Tag
+tagDecoder =
+    decode Tag
+        |> required "name" string
+        |> hardcoded "www.link.com"
 
 
 nonHtmlString : Decoder String
