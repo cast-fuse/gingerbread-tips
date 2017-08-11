@@ -21,19 +21,27 @@ tips model =
 
         Success tips ->
             div [ class "center mw8 ph3" ]
-                [ div [] <| List.map renderTip <| visibleTips model.history tips
+                [ div [] <| List.indexedMap renderTip <| visibleTips model.history tips
                 ]
 
 
-renderTip : Tip -> Html Msg
-renderTip tip =
+renderTip : Int -> Tip -> Html Msg
+renderTip index tip =
     div []
-        [ div [ class "bg-white dark-gray mv4 pa4 tl br2" ]
+        [ div [ class "bg-white dark-gray mv4 pa4 tl br4" ]
             [ h2 [ class "f2 handwriting mt0" ] [ text tip.title ]
             , p [ class "f5" ] [ text tip.body ]
             ]
-        , div [ class "flex justify-between" ]
+        , div [ class <| "flex justify-between " ++ alternateMetaDataLayoutClass index ]
             [ p [ class "white f2 mv0 mh3" ] [ text tip.attribution ]
-            , p [ class "f2 mv0 mh3 bg-white orange pv2 ph3 br5" ] [ text "separation" ]
+            , p [ class "f2 mv0 mh3 bg-white orange pv2 ph3 br5" ] [ text "Separation" ]
             ]
         ]
+
+
+alternateMetaDataLayoutClass : Int -> String
+alternateMetaDataLayoutClass index =
+    if index % 2 == 0 then
+        ""
+    else
+        "flex-row-reverse"

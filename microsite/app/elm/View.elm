@@ -17,4 +17,5 @@ view model =
             [ headline
             , tips model
             ]
+        , navbar
         ]
