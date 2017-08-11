@@ -25520,7 +25520,7 @@ var _cast_fuse$gingerbread_tips$Views_Headline$headline = A2(
 			_elm_lang$html$Html$h2,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('f1 handwriting'),
+				_0: _elm_lang$html$Html_Attributes$class('f-headline handwriting mv2'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -25534,7 +25534,7 @@ var _cast_fuse$gingerbread_tips$Views_Headline$headline = A2(
 				_elm_lang$html$Html$p,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('f3'),
+					_0: _elm_lang$html$Html_Attributes$class('f5 mt1 mb5 tl mh4'),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -25685,7 +25685,7 @@ var _cast_fuse$gingerbread_tips$Views_Navbar$navbar = A2(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('w-100 mw5 pointer'),
+				_0: _elm_lang$html$Html_Attributes$class('w-100 mw6 pointer ma3'),
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$html$Html_Events$onClick(_cast_fuse$gingerbread_tips$Model$Home),
@@ -25714,14 +25714,18 @@ var _cast_fuse$gingerbread_tips$Views_Navbar$navbar = A2(
 				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('bg-orange br4 pv2 ph5 white f6 tracked fw1'),
+					_0: _elm_lang$html$Html_Attributes$class('bg-orange br4 pv2 ph4 white f6 tracked fw1 br5'),
 					_1: {ctor: '[]'}
 				},
 				{
 					ctor: '::',
 					_0: A2(
 						_elm_lang$html$Html$h3,
-						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('f2 ma0'),
+							_1: {ctor: '[]'}
+						},
 						{
 							ctor: '::',
 							_0: _elm_lang$html$Html$text('Main site'),
@@ -25733,46 +25737,174 @@ var _cast_fuse$gingerbread_tips$Views_Navbar$navbar = A2(
 		}
 	});
 
-var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = function (tip) {
+var _cast_fuse$gingerbread_tips$Views_Tags$renderTag = function (tag) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('bg-white dark-gray mv4 pa4 tl br2'),
+			_0: _elm_lang$html$Html_Attributes$class('dib pv2 ph3 br5 pointer orange bg-white f2'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(
+					_cast_fuse$gingerbread_tips$Model$GoToTag(tag)),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$p,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('ma0'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(tag.title),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _cast_fuse$gingerbread_tips$Views_Tags$renderTags = function (tips) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('bg-gold ph3'),
 			_1: {ctor: '[]'}
 		},
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$h2,
+				_elm_lang$html$Html$p,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('f2 handwriting'),
+					_0: _elm_lang$html$Html_Attributes$class('dark-blue tl pv4'),
 					_1: {ctor: '[]'}
 				},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(tip.title),
+					_0: _elm_lang$html$Html$text('Filter these tips by...'),
 					_1: {ctor: '[]'}
 				}),
 			_1: {
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$p,
+					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('f5'),
+						_0: _elm_lang$html$Html_Attributes$class('pb4 flex justify-between'),
 						_1: {ctor: '[]'}
 					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(tip.body),
-						_1: {ctor: '[]'}
-					}),
+					A2(
+						_elm_lang$core$List$map,
+						_cast_fuse$gingerbread_tips$Views_Tags$renderTag,
+						_cast_fuse$gingerbread_tips$Data_Tip$allTags(tips))),
 				_1: {ctor: '[]'}
 			}
 		});
 };
+
+var _cast_fuse$gingerbread_tips$Views_Tips$alternateMetaDataLayoutClass = function (index) {
+	return _elm_lang$core$Native_Utils.eq(
+		A2(_elm_lang$core$Basics_ops['%'], index, 2),
+		0) ? '' : 'flex-row-reverse';
+};
+var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
+	function (index, tip) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('bg-white dark-gray mv4 pa4 tl br4'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$h2,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('f2 handwriting mt0'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(tip.title),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$p,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('f5'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(tip.body),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'flex justify-between ',
+									_cast_fuse$gingerbread_tips$Views_Tips$alternateMetaDataLayoutClass(index))),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$p,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('white f2 mv0 mh3'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(tip.attribution),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$p,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('f2 mv0 mh3 bg-white orange pv2 ph3 br5'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Separation'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
 var _cast_fuse$gingerbread_tips$Views_Tips$tips = function (model) {
 	var _p0 = model.tips;
 	switch (_p0.ctor) {
@@ -25800,6 +25932,7 @@ var _cast_fuse$gingerbread_tips$Views_Tips$tips = function (model) {
 					_1: {ctor: '[]'}
 				});
 		default:
+			var _p1 = _p0._0;
 			return A2(
 				_elm_lang$html$Html$div,
 				{
@@ -25813,10 +25946,14 @@ var _cast_fuse$gingerbread_tips$Views_Tips$tips = function (model) {
 						_elm_lang$html$Html$div,
 						{ctor: '[]'},
 						A2(
-							_elm_lang$core$List$map,
+							_elm_lang$core$List$indexedMap,
 							_cast_fuse$gingerbread_tips$Views_Tips$renderTip,
-							A2(_cast_fuse$gingerbread_tips$Data_Tip$visibleTips, model.history, _p0._0))),
-					_1: {ctor: '[]'}
+							A2(_cast_fuse$gingerbread_tips$Data_Tip$visibleTips, model.history, _p1))),
+					_1: {
+						ctor: '::',
+						_0: _cast_fuse$gingerbread_tips$Views_Tags$renderTags(_p1),
+						_1: {ctor: '[]'}
+					}
 				});
 	}
 };
@@ -25844,7 +25981,11 @@ var _cast_fuse$gingerbread_tips$View$view = function (model) {
 							_1: {ctor: '[]'}
 						}
 					}),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _cast_fuse$gingerbread_tips$Views_Navbar$navbar,
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };
