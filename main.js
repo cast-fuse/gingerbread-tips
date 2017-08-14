@@ -25529,7 +25529,7 @@ var _cast_fuse$gingerbread_tips$Views_Headline$headline = A2(
 	_elm_lang$html$Html$div,
 	{
 		ctor: '::',
-		_0: _elm_lang$html$Html_Attributes$class('white mw8 center'),
+		_0: _elm_lang$html$Html_Attributes$class('white mw7-ns mw8 center'),
 		_1: {ctor: '[]'}
 	},
 	{
@@ -25538,7 +25538,7 @@ var _cast_fuse$gingerbread_tips$Views_Headline$headline = A2(
 			_elm_lang$html$Html$h2,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('f-headline handwriting mv2'),
+				_0: _elm_lang$html$Html_Attributes$class('f3 handwriting mv2'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -25552,7 +25552,7 @@ var _cast_fuse$gingerbread_tips$Views_Headline$headline = A2(
 				_elm_lang$html$Html$p,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('f5 mt1 mb5 tl mh4'),
+					_0: _elm_lang$html$Html_Attributes$class('f6 mt1 mb2-ns tl mh4'),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -25694,7 +25694,7 @@ var _cast_fuse$gingerbread_tips$Views_Navbar$navbar = A2(
 	_elm_lang$html$Html$div,
 	{
 		ctor: '::',
-		_0: _elm_lang$html$Html_Attributes$class('flex justify-between items-center mw8 center pa3'),
+		_0: _elm_lang$html$Html_Attributes$class('flex justify-between items-center mw7-ns mw8 center pa3'),
 		_1: {ctor: '[]'}
 	},
 	{
@@ -25719,7 +25719,7 @@ var _cast_fuse$gingerbread_tips$Views_Navbar$navbar = A2(
 						_0: _elm_lang$html$Html_Attributes$src('/img/gingerbread-logo.png'),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('w-100'),
+							_0: _elm_lang$html$Html_Attributes$class('w-100 w-70-ns'),
 							_1: {ctor: '[]'}
 						}
 					},
@@ -25732,7 +25732,7 @@ var _cast_fuse$gingerbread_tips$Views_Navbar$navbar = A2(
 				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('bg-orange br4 pv2 ph4 white f6 tracked fw1 br5'),
+					_0: _elm_lang$html$Html_Attributes$class('bg-orange pv2 ph4 white tracked fw1 br5'),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -25741,7 +25741,7 @@ var _cast_fuse$gingerbread_tips$Views_Navbar$navbar = A2(
 						_elm_lang$html$Html$h3,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('f2 ma0'),
+							_0: _elm_lang$html$Html_Attributes$class('ma0 f6'),
 							_1: {ctor: '[]'}
 						},
 						{
@@ -25760,7 +25760,7 @@ var _cast_fuse$gingerbread_tips$Views_Tags$renderTag = function (tag) {
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('dib pv2 ph3 br5 pointer orange bg-white f2'),
+			_0: _elm_lang$html$Html_Attributes$class('dib pv2 ph3 br5 pointer orange bg-white f6 mb2 mr2'),
 			_1: {
 				ctor: '::',
 				_0: _elm_lang$html$Html_Events$onClick(
@@ -25799,7 +25799,7 @@ var _cast_fuse$gingerbread_tips$Views_Tags$renderTags = function (tips) {
 				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('mw8 center ph3'),
+					_0: _elm_lang$html$Html_Attributes$class('mw7-ns mw8 center ph3'),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -25808,7 +25808,7 @@ var _cast_fuse$gingerbread_tips$Views_Tags$renderTags = function (tips) {
 						_elm_lang$html$Html$p,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('dark-blue tl pv4'),
+							_0: _elm_lang$html$Html_Attributes$class('dark-blue tl pt3 pb0'),
 							_1: {ctor: '[]'}
 						},
 						{
@@ -25822,7 +25822,7 @@ var _cast_fuse$gingerbread_tips$Views_Tags$renderTags = function (tips) {
 							_elm_lang$html$Html$div,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('pb4 flex justify-between'),
+								_0: _elm_lang$html$Html_Attributes$class('pb4 tl'),
 								_1: {ctor: '[]'}
 							},
 							A2(
@@ -25866,7 +25866,7 @@ var _cast_fuse$gingerbread_tips$Views_Tips$quoteBubble = F2(
 							_elm_lang$html$Html$h2,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('f1 handwriting mt0'),
+								_0: _elm_lang$html$Html_Attributes$class('f5 handwriting mt0 mb1-ns'),
 								_1: {ctor: '[]'}
 							},
 							{
@@ -25886,7 +25886,8 @@ var _cast_fuse$gingerbread_tips$Views_Tips$quoteBubble = F2(
 								{
 									ctor: '::',
 									_0: _elm_lang$html$Html$text(
-										_cast_fuse$gingerbread_tips$Views_Tips$addQuotationMarks(body)),
+										_cast_fuse$gingerbread_tips$Views_Tips$addQuotationMarks(
+											_elm_lang$core$String$trim(body))),
 									_1: {ctor: '[]'}
 								}),
 							_1: {ctor: '[]'}
@@ -25924,7 +25925,7 @@ var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('center mw8 ph3 pv3'),
+				_0: _elm_lang$html$Html_Attributes$class('center mw7-ns mw8 ph3 pv3 pv1-ns'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -25936,7 +25937,7 @@ var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
 						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('flex justify-between mt4'),
+							_0: _elm_lang$html$Html_Attributes$class('flex justify-between mt4 mt3-ns'),
 							_1: {ctor: '[]'}
 						},
 						{
@@ -25945,7 +25946,7 @@ var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
 								_elm_lang$html$Html$p,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('white f2 mv0 mh3'),
+									_0: _elm_lang$html$Html_Attributes$class('white f6 mv0 mh3'),
 									_1: {ctor: '[]'}
 								},
 								{
@@ -25959,7 +25960,7 @@ var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
 									_elm_lang$html$Html$p,
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$class('f2 mv0 mh3 bg-white orange pv2 ph3 br5'),
+										_0: _elm_lang$html$Html_Attributes$class('f6 mv0 mh3 bg-white orange pv2 ph3 br5'),
 										_1: {ctor: '[]'}
 									},
 									{
