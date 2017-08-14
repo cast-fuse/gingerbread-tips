@@ -6,6 +6,7 @@ import Html.Attributes exposing (..)
 import Model exposing (..)
 import RemoteData exposing (..)
 import Views.Tags exposing (renderTags)
+import Helpers.List exposing (groupListElements)
 
 
 tips : Model -> Html Msg
@@ -21,15 +22,22 @@ tips model =
             p [] [ text "Sorry there was a problem loading the data" ]
 
         Success tips ->
-            div []
-                [ div [ class "center mw8 ph3" ] <| List.indexedMap renderTip <| visibleTips model.history tips
-                , renderTags tips
-                ]
+            let
+                tags =
+                    renderTags tips
+
+                tipsAndTags =
+                    intersperseTags tags <| List.indexedMap renderTip <| visibleTips model.history tips
+            in
+                div []
+                    [ div [] tipsAndTags
+                    , tags
+                    ]
 
 
 renderTip : Int -> Tip -> Html Msg
 renderTip index tip =
-    div []
+    div [ class "center mw8 ph3" ]
         [ div [ class "bg-white dark-gray mv4 pa4 tl br4" ]
             [ h2 [ class "f2 handwriting mt0" ] [ text tip.title ]
             , p [ class "f5" ] [ text tip.body ]
@@ -47,3 +55,11 @@ alternateMetaDataLayoutClass index =
         ""
     else
         "flex-row-reverse"
+
+
+intersperseTags : Html Msg -> List (Html Msg) -> List (Html Msg)
+intersperseTags tags tips =
+    tips
+        |> groupListElements 2
+        |> List.intersperse (List.singleton tags)
+        |> List.concat
