@@ -1,11 +1,11 @@
-module Helpers.List exposing (groupListElements)
+module Helpers.List exposing (chunkEvery)
 
 
-groupListElements : Int -> List a -> List (List a)
-groupListElements groupSize list =
+chunkEvery : Int -> List a -> List (List a)
+chunkEvery groupSize list =
     case list of
         [] ->
             []
 
         list ->
-            List.take groupSize list :: (groupListElements groupSize <| List.drop groupSize list)
+            List.take groupSize list :: (chunkEvery groupSize <| List.drop groupSize list)

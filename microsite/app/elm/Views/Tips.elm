@@ -6,7 +6,7 @@ import Html.Attributes exposing (..)
 import Model exposing (..)
 import RemoteData exposing (..)
 import Views.Tags exposing (renderTags)
-import Helpers.List exposing (groupListElements)
+import Helpers.List exposing (chunkEvery)
 
 
 tips : Model -> Html Msg
@@ -35,6 +35,10 @@ tips model =
                     ]
 
 
+
+-- TODO: render relevant tags
+
+
 renderTip : Int -> Tip -> Html Msg
 renderTip index tip =
     div [ class "center mw7-ns mw8 ph3 pv3 pv1-ns" ]
@@ -49,7 +53,7 @@ renderTip index tip =
 intersperseTags : Html Msg -> List (Html Msg) -> List (Html Msg)
 intersperseTags tags tips =
     tips
-        |> groupListElements 2
+        |> chunkEvery 2
         |> List.intersperse (List.singleton tags)
         |> List.concat
 
