@@ -21,8 +21,8 @@ tips model =
             p [] [ text "Sorry there was a problem loading the data" ]
 
         Success tips ->
-            div [ class "center mw8 ph3" ]
-                [ div [] <| List.indexedMap renderTip <| visibleTips model.history tips
+            div []
+                [ div [ class "center mw8 ph3" ] <| List.indexedMap renderTip <| visibleTips model.history tips
                 , renderTags tips
                 ]
 
