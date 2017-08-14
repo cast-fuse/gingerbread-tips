@@ -32,4 +32,4 @@ update msg model =
             model ! [ newUrl "/" ]
 
         GoToTag tag ->
-            model ! [ newUrl tag.title ]
+            model ! [ newUrl tag.urlSlug ]

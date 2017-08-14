@@ -21,7 +21,8 @@ type alias Tip =
 
 type alias Tag =
     { title : String
-    , link : String
+    , urlSlug : String
+    , gingerbreadLink : String
     }
 
 

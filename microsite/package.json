@@ -4,13 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "elm-live app/Main.elm --output=public/main.js --dir=public --open --debug --pushstate",
-    "build": "elm-make app/Main.elm --output=public/main.js",
+    "dev": "npm run elm-watch & npm run css-watch",
+    "elm-watch": "elm-live app/elm/Main.elm --output=public/main.js --dir=public --open --debug --pushstate",
+    "css-watch": "postcss --watch --config ./postcss.config.js",
+    "build": "npm run elm-build && npm run compress && npm run css-build",
+    "elm-build": "elm-make app/elm/Main.elm --output=public/main.js",
+    "compress": "uglifyjs -c -m -o public/main.js public/main.js",
+    "css-build": "postcss --config ./postcss.config.js",
     "deploy": "cd ../ && git subtree push --prefix microsite/public origin gh-pages"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "elm-live": "^2.7.5"
+    "autoprefixer": "^7.1.2",
+    "elm-live": "^2.7.5",
+    "postcss-clean": "^1.0.3",
+    "postcss-cli": "^2.6.0",
+    "postcss-custom-media": "^6.0.0",
+    "postcss-custom-properties": "^6.1.0",
+    "postcss-import": "^10.0.0",
+    "uglifyjs": "^2.4.11"
+  },
+  "dependencies": {
+    "tachyons-custom": "^4.6.0"
   }
 }
