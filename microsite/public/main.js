@@ -25836,26 +25836,19 @@ var _cast_fuse$gingerbread_tips$Views_Tags$renderTags = function (tips) {
 		});
 };
 
-var _cast_fuse$gingerbread_tips$Views_Tips$intersperseTags = F2(
-	function (tags, tips) {
-		return _elm_lang$core$List$concat(
-			A2(
-				_elm_lang$core$List$intersperse,
-				_elm_lang$core$List$singleton(tags),
-				A2(_cast_fuse$gingerbread_tips$Helpers_List$groupListElements, 2, tips)));
-	});
-var _cast_fuse$gingerbread_tips$Views_Tips$alternateMetaDataLayoutClass = function (index) {
-	return _elm_lang$core$Native_Utils.eq(
-		A2(_elm_lang$core$Basics_ops['%'], index, 2),
-		0) ? '' : 'flex-row-reverse';
+var _cast_fuse$gingerbread_tips$Views_Tips$addQuotationMarks = function (quote) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'“',
+		A2(_elm_lang$core$Basics_ops['++'], quote, '”'));
 };
-var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
-	function (index, tip) {
+var _cast_fuse$gingerbread_tips$Views_Tips$quoteBubble = F2(
+	function (title, body) {
 		return A2(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('center mw8 ph3'),
+				_0: _elm_lang$html$Html_Attributes$class('relative pt2 pb4 ph2 mt3 mb2 tl'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -25864,7 +25857,7 @@ var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('bg-white dark-gray mv4 pa4 tl br4'),
+						_0: _elm_lang$html$Html_Attributes$class('relative z-3 black pv3 ph4'),
 						_1: {ctor: '[]'}
 					},
 					{
@@ -25873,12 +25866,12 @@ var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
 							_elm_lang$html$Html$h2,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('f2 handwriting mt0'),
+								_0: _elm_lang$html$Html_Attributes$class('f1 handwriting mt0'),
 								_1: {ctor: '[]'}
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(tip.title),
+								_0: _elm_lang$html$Html$text(title),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
@@ -25887,12 +25880,13 @@ var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
 								_elm_lang$html$Html$p,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('f5'),
+									_0: _elm_lang$html$Html_Attributes$class('f6'),
 									_1: {ctor: '[]'}
 								},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text(tip.body),
+									_0: _elm_lang$html$Html$text(
+										_cast_fuse$gingerbread_tips$Views_Tips$addQuotationMarks(body)),
 									_1: {ctor: '[]'}
 								}),
 							_1: {ctor: '[]'}
@@ -25901,14 +25895,48 @@ var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
 				_1: {
 					ctor: '::',
 					_0: A2(
+						_elm_lang$html$Html$img,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('absolute top-0 left-0 z-1 h-100 w-100'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$src('img/quote-box.png'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _cast_fuse$gingerbread_tips$Views_Tips$intersperseTags = F2(
+	function (tags, tips) {
+		return _elm_lang$core$List$concat(
+			A2(
+				_elm_lang$core$List$intersperse,
+				_elm_lang$core$List$singleton(tags),
+				A2(_cast_fuse$gingerbread_tips$Helpers_List$groupListElements, 2, tips)));
+	});
+var _cast_fuse$gingerbread_tips$Views_Tips$renderTip = F2(
+	function (index, tip) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('center mw8 ph3 pv3'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(_cast_fuse$gingerbread_tips$Views_Tips$quoteBubble, tip.title, tip.body),
+				_1: {
+					ctor: '::',
+					_0: A2(
 						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'flex justify-between ',
-									_cast_fuse$gingerbread_tips$Views_Tips$alternateMetaDataLayoutClass(index))),
+							_0: _elm_lang$html$Html_Attributes$class('flex justify-between mt4'),
 							_1: {ctor: '[]'}
 						},
 						{
