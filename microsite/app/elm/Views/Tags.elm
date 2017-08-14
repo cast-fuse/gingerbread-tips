@@ -10,14 +10,14 @@ import Model exposing (..)
 renderTags : List Tip -> Html Msg
 renderTags tips =
     div [ class "bg-gold ph3" ]
-        [ div [ class "mw8 center ph3" ]
-            [ p [ class "dark-blue tl pv4" ] [ text "Filter these tips by..." ]
-            , div [ class "pb4 flex justify-between" ] (List.map renderTag <| allTags tips)
+        [ div [ class "mw7-ns mw8 center ph3" ]
+            [ p [ class "dark-blue tl pt3 pb0" ] [ text "Filter these tips by..." ]
+            , div [ class "pb4 tl" ] (List.map renderTag <| allTags tips)
             ]
         ]
 
 
 renderTag : Tag -> Html Msg
 renderTag tag =
-    div [ class "dib pv2 ph3 br5 pointer orange bg-white f2", onClick <| GoToTag tag ]
+    div [ class "dib pv2 ph3 br5 pointer orange bg-white f6 mb2 mr2", onClick <| GoToTag tag ]
         [ p [ class "ma0" ] [ text tag.title ] ]

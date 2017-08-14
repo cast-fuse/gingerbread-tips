@@ -37,11 +37,11 @@ tips model =
 
 renderTip : Int -> Tip -> Html Msg
 renderTip index tip =
-    div [ class "center mw8 ph3 pv3" ]
+    div [ class "center mw7-ns mw8 ph3 pv3 pv1-ns" ]
         [ quoteBubble tip.title tip.body
-        , div [ class "flex justify-between mt4" ]
-            [ p [ class "white f2 mv0 mh3" ] [ text tip.attribution ]
-            , p [ class "f2 mv0 mh3 bg-white orange pv2 ph3 br5" ] [ text "Separation" ]
+        , div [ class "flex justify-between mt4 mt3-ns" ]
+            [ p [ class "white f6 mv0 mh3" ] [ text tip.attribution ]
+            , p [ class "f6 mv0 mh3 bg-white orange pv2 ph3 br5" ] [ text "Separation" ]
             ]
         ]
 
@@ -58,8 +58,8 @@ quoteBubble : String -> String -> Html msg
 quoteBubble title body =
     div [ class "relative pt2 pb4 ph2 mt3 mb2 tl" ]
         [ div [ class "relative z-3 black pv3 ph4" ]
-            [ h2 [ class "f1 handwriting mt0" ] [ text title ]
-            , p [ class "f6" ] [ text <| addQuotationMarks body ]
+            [ h2 [ class "f5 handwriting mt0 mb1-ns" ] [ text title ]
+            , p [ class "f6" ] [ text <| addQuotationMarks <| String.trim body ]
             ]
         , img [ class "absolute top-0 left-0 z-1 h-100 w-100", src "img/quote-box.png" ] []
         ]
