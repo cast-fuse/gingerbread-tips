@@ -1,12 +1,12 @@
 module Views.Tips exposing (..)
 
 import Data.Tip exposing (visibleTips)
+import Helpers.List exposing (chunkEvery)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Model exposing (..)
 import RemoteData exposing (..)
-import Views.Tags exposing (renderTags)
-import Helpers.List exposing (chunkEvery)
+import Views.Tags exposing (renderTag, tagCloud)
 
 
 tips : Model -> Html Msg
@@ -24,7 +24,7 @@ tips model =
         Success tips ->
             let
                 tags =
-                    renderTags tips
+                    tagCloud tips
 
                 tipsAndTags =
                     intersperseTags tags <| List.indexedMap renderTip <| visibleTips model.history tips
@@ -35,17 +35,13 @@ tips model =
                     ]
 
 
-
--- TODO: render relevant tags
-
-
 renderTip : Int -> Tip -> Html Msg
 renderTip index tip =
     div [ class "center mw7-ns mw8 ph3 pv3 pv1-ns" ]
         [ quoteBubble tip.title tip.body
-        , div [ class "flex justify-between mt4 mt3-ns" ]
+        , div [ class "tl mt4 mt2-ns" ]
             [ p [ class "white f6 mv0 mh3" ] [ text tip.attribution ]
-            , p [ class "f6 mv0 mh3 bg-white orange pv2 ph3 br5" ] [ text "Separation" ]
+            , div [ class "ma3" ] <| List.map renderTag tip.tags
             ]
         ]
 
@@ -54,7 +50,7 @@ intersperseTags : Html Msg -> List (Html Msg) -> List (Html Msg)
 intersperseTags tags tips =
     tips
         |> chunkEvery 2
-        |> List.intersperse (List.singleton tags)
+        |> List.intersperse [ tags ]
         |> List.concat
 
 

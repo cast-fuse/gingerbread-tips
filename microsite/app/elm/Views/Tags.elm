@@ -7,8 +7,8 @@ import Html.Events exposing (onClick)
 import Model exposing (..)
 
 
-renderTags : List Tip -> Html Msg
-renderTags tips =
+tagCloud : List Tip -> Html Msg
+tagCloud tips =
     div [ class "bg-gold ph3" ]
         [ div [ class "mw7-ns mw8 center ph3" ]
             [ p [ class "dark-blue tl pt3 pb0" ] [ text "Filter these tips by..." ]
