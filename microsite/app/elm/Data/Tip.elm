@@ -1,9 +1,9 @@
 module Data.Tip exposing (..)
 
+import Data.Navigation exposing (getCurrentTagName)
 import Dict exposing (Dict)
 import Model exposing (..)
 import Navigation
-import UrlParser exposing (..)
 
 
 handleTipsResponse : RemoteTipsData -> Model -> Model
@@ -63,16 +63,3 @@ allTagsDictionary tips =
 makeTagDict : List Tag -> Dict String Tag
 makeTagDict tags =
     tags |> List.foldl (\tag dict -> Dict.insert tag.urlSlug tag dict) Dict.empty
-
-
-getCurrentTagName : List Navigation.Location -> String
-getCurrentTagName history =
-    history
-        |> List.head
-        |> Maybe.andThen getTagFromUrlBar
-        |> Maybe.withDefault ""
-
-
-getTagFromUrlBar : Navigation.Location -> Maybe String
-getTagFromUrlBar =
-    parsePath string

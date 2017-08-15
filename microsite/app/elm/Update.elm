@@ -1,5 +1,7 @@
 module Update exposing (..)
 
+import Data.Navigation exposing (getOrigin)
+import Data.Port exposing (scrollTop)
 import Data.Tip exposing (handleTipsResponse)
 import Model exposing (..)
 import Navigation exposing (newUrl)
@@ -29,7 +31,7 @@ update msg model =
             { model | history = location :: model.history } ! []
 
         Home ->
-            model ! [ newUrl "/" ]
+            model ! [ newUrl <| getOrigin model.history ]
 
         GoToTag tag ->
-            model ! [ newUrl tag.urlSlug ]
+            model ! [ newUrl tag.urlSlug, scrollTop ]
