@@ -11,7 +11,9 @@
     "elm-build": "elm-make app/elm/Main.elm --output=public/main.js",
     "compress": "uglifyjs -c -m -o public/main.js public/main.js",
     "css-build": "postcss --config ./postcss.config.js",
-    "deploy": "cd ../ && git subtree push --prefix microsite/public origin gh-pages"
+    "gh-deploy": "cd ../ && git subtree push --prefix microsite/public origin gh-pages",
+    "commit-bundle": "git add . && git commit -m 'prepare bundle'",
+    "deploy": "git checkout gh-deploy && git merge master && npm run build && npm run commit-bundle && npm run gh-deploy && git checkout master"
   },
   "author": "",
   "license": "ISC",
