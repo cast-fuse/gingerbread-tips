@@ -61,7 +61,7 @@ quoteBubble title body =
             [ h2 [ class "f5 handwriting mt0 mb1-ns" ] [ text title ]
             , p [ class "f6" ] [ text <| addQuotationMarks <| String.trim body ]
             ]
-        , img [ class "absolute top-0 left-0 z-1 h-100 w-100", src "/gingerbread-tips/img/quote-box.png" ] []
+        , img [ class "absolute top-0 left-0 z-1 h-100 w-100", src "/img/quote-box.png" ] []
         ]
 
 
