@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: var(--sans-serif);
+  font-weight: 400;
 }
 
 .pointer {
@@ -8,7 +9,7 @@ body {
 }
 
 .handwriting {
-  font-family: Caveat;
+  font-family: var(--handwriting);
 }
 
 .br5 {
