@@ -19,5 +19,5 @@ tagCloud tips =
 
 renderTag : Tag -> Html Msg
 renderTag tag =
-    div [ class "dib pv2 ph3 br5 pointer orange bg-white f6 mb2 mr2", onClick <| GoToTag tag ]
+    div [ class "dib pv2 ph3 br5 pointer orange bg-white f5 mb2 mr2", onClick <| GoToTag tag ]
         [ p [ class "ma0" ] [ text tag.title ] ]

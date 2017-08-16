@@ -4,18 +4,19 @@
 
 :root {
 
-  --sans-serif: 'helvetica neue', helvetica, arial;
+  --sans-serif: 'lato', 'helvetica neue', helvetica, arial;
   --serif: georgia, serif;
+  --handwriting: Caveat;
   --code: consolas, monaco, monospace;
 
   --font-size-headline: 8rem;
   --font-size-subheadline: 5rem;
-  --font-size-1: 8rem;
-  --font-size-2: 6rem;
-  --font-size-3: 3.5rem;
-  --font-size-4: 2.25rem;
-  --font-size-5: 1.5rem;
-  --font-size-6: .875rem;
+  --font-size-1: 4.5rem;
+  --font-size-2: 3rem;
+  --font-size-3: 2rem;
+  --font-size-4: 1.2rem;
+  --font-size-5: 1rem;
+  --font-size-6: 0.8rem;
 
   --letter-spacing-tight:-.05em;
   --letter-spacing-1:.1em;
@@ -53,9 +54,9 @@
   --max-width-1: 1rem;
   --max-width-2: 2rem;
   --max-width-3: 4rem;
-  --max-width-4: 8rem;
+  --max-width-4: 10rem;
   --max-width-5: 16rem;
-  --max-width-6: 32rem;
+  --max-width-6: 27rem;
   --max-width-7: 48rem;
   --max-width-8: 64rem;
   --max-width-9: 96rem;
