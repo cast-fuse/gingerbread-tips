@@ -40,7 +40,7 @@ renderTip index tip =
     div [ class "center mw7-ns mw8 ph3 pv3 pv1-ns" ]
         [ quoteBubble tip.title tip.body
         , div [ class "tl mt4 mt2-ns" ]
-            [ p [ class "white f6 mv0 mh3" ] [ text tip.attribution ]
+            [ p [ class "white f5 mv0 mh3" ] [ text tip.attribution ]
             , div [ class "ma3" ] <| List.map renderTag tip.tags
             ]
         ]
@@ -57,9 +57,9 @@ intersperseTags tags tips =
 quoteBubble : String -> String -> Html msg
 quoteBubble title body =
     div [ class "relative pt2 pb4 ph2 mt3 mb2 tl" ]
-        [ div [ class "relative z-3 black pv3 ph4" ]
-            [ h2 [ class "f5 handwriting mt0 mb1-ns" ] [ text title ]
-            , p [ class "f6" ] [ text <| addQuotationMarks <| String.trim body ]
+        [ div [ class "relative z-3 black pa3 ph4-ns" ]
+            [ h2 [ class "f3 handwriting mt0 mb1-ns" ] [ text title ]
+            , p [ class "f5 f4-ns pb4" ] [ text <| addQuotationMarks <| String.trim body ]
             ]
         , img [ class "absolute top-0 left-0 z-1 h-100 w-100", src "/img/quote-box.png" ] []
         ]
