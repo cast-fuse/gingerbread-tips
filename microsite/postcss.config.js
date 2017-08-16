@@ -1,11 +1,9 @@
 module.exports = {
-  input: './app/css/index.css',
-  output: './public/style.min.css',
-  use: [
-    'postcss-import',
-    'autoprefixer',
-    'postcss-custom-media',
-    'postcss-clean',
-    'postcss-custom-properties'
+  plugins: [
+    require('postcss-import')(),
+    require('autoprefixer')(),
+    require('postcss-custom-media')(),
+    require('postcss-clean')(),
+    require('postcss-custom-properties')()
   ]
 }
