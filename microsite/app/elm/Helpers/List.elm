@@ -1,4 +1,4 @@
-module Helpers.List exposing (chunkEvery)
+module Helpers.List exposing (chunkEvery, anyTrue)
 
 
 chunkEvery : Int -> List a -> List (List a)
@@ -9,3 +9,8 @@ chunkEvery groupSize list =
 
         list ->
             List.take groupSize list :: (chunkEvery groupSize <| List.drop groupSize list)
+
+
+anyTrue : List Bool -> Bool
+anyTrue =
+    List.foldl (||) False

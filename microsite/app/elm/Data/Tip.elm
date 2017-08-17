@@ -2,6 +2,7 @@ module Data.Tip exposing (..)
 
 import Data.Navigation exposing (getCurrentTagName)
 import Dict exposing (Dict)
+import Helpers.List exposing (anyTrue)
 import Model exposing (..)
 import Navigation
 
@@ -35,16 +36,12 @@ isValidTag tagTitle tips =
         |> anyTrue
 
 
-anyTrue : List Bool -> Bool
-anyTrue =
-    List.foldl (||) False
-
-
 containsTag : String -> Tip -> Bool
 containsTag tagUrl tip =
     tip.tags
         |> List.map .urlSlug
-        |> List.member tagUrl
+        |> List.map (\url -> String.contains tagUrl url)
+        |> anyTrue
 
 
 allTags : List Tip -> List Tag

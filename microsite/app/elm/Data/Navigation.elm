@@ -1,7 +1,7 @@
 module Data.Navigation exposing (..)
 
 import Navigation
-import UrlParser exposing (parsePath, string)
+import UrlParser exposing (parsePath, string, s, (</>))
 
 
 getCurrentTagName : List Navigation.Location -> String
@@ -22,4 +22,4 @@ getOrigin history =
 
 getTagFromUrlBar : Navigation.Location -> Maybe String
 getTagFromUrlBar =
-    parsePath string
+    parsePath (s "gingerbread-tips" </> string)
