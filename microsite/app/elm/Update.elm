@@ -31,7 +31,7 @@ update msg model =
             { model | history = location :: model.history } ! []
 
         Home ->
-            model ! [ newUrl <| getOrigin model.history ]
+            model ! [ newUrl <| "/gingerbread-tips" ]
 
         GoToTag tag ->
-            model ! [ newUrl tag.urlSlug, scrollTop ]
+            model ! [ newUrl <| "/gingerbread-tips/" ++ tag.urlSlug, scrollTop ]
