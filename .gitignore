@@ -22,3 +22,5 @@ sitemap.xml.gz
 
 elm-stuff
 node_modules
+microsite/public/main.js
+microsite/public/style.min.css
