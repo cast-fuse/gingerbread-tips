@@ -4,8 +4,8 @@ Description: This plugin registers the extra meta boxes in the admin area.
 Version: 1.0
 License: GPLv2
 */
-add_action( 'rest_api_init', 'add_attribution_to_rest_api' );
-add_filter( 'rwmb_meta_boxes', 'register_tips_meta_boxes' );
+add_action( 'rest_api_init', 'add_attribution_to_rest_api', 13 );
+add_filter( 'rwmb_meta_boxes', 'register_tips_meta_boxes', 14 );
 
 function add_attribution_to_rest_api() {
   register_rest_field('tips', 'attribution', array(

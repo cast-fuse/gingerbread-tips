@@ -61,6 +61,6 @@ function tips_post_type() {
 	register_post_type( 'tips', $args );
 
 }
-add_action( 'init', 'tips_post_type', 0 );
+add_action( 'init', 'tips_post_type', 12 );
 
 ?>

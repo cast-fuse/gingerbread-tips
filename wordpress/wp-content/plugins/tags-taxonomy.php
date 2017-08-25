@@ -44,7 +44,7 @@ function tip_tag_taxonomy() {
 
 }
 
-add_action( 'init', 'tip_tag_taxonomy', 0 );
+add_action( 'init', 'tip_tag_taxonomy', 10 );
 
 function get_tag_data( $object ) {
   $tags = get_the_terms( $object['id'], 'tag' );
@@ -61,6 +61,6 @@ function register_tag_rest_field() {
   );
 }
 
-add_action( 'rest_api_init', 'register_tag_rest_field' );
+add_action( 'rest_api_init', 'register_tag_rest_field', 11 );
 
 ?>
